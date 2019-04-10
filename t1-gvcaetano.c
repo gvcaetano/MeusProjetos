@@ -3,8 +3,10 @@
 
 #include <time.h>
 #include <stdio.h>
+
 //Compensação do fuso e um ano antes para valores negativos
 #define FUSO 31525200
+
 // Definição dos dias da semana para o switch.
 enum { qua, qui, sex, sab, dom, seg, ter };
 int main()
@@ -22,11 +24,13 @@ int main()
   } else {
     total = time(0) + FUSO;
   }
+
   segundos = total % 60;       //Definição de horas, minutos, segundos, anos
   minutos = (total / 60) % 60; // e variáveis auxiliares.
   horas = (total / 3600) % 24;
   diasAnos = total / 86400;
   anos = diasAnos / 365 + 1969;
+
   switch (diasAnos % 7) { //Definição do dia da semana.
     case qui:
       printf("Quinta-feira, ");
@@ -50,12 +54,14 @@ int main()
       printf("Quarta-Feira, ");
       break;
   }  
+
   //Correções para bissexto.
   diasMes = ((diasAnos % 365) - (anos - 1969) / 4);
   diasMes = diasMes + (((anos - 2001) / 100) - (anos - 2001) / 400);
   if (!(anos % 4) && (anos % 100) || !(anos % 400)) {
     feb++; mar++; apr++; mai++; jun++; jul++; aug++; sep++; oct++; nov++;
   }
+
   if (diasMes < 0) { //Correção da quantidade de dias e do ano na virada.
     if ((!(anos % 4) && (anos % 100)) || !(anos % 400)) {
       diasMes = diasMes + 366;
@@ -64,6 +70,7 @@ int main()
     }
     anos--;
   }  
+
   diasMes++; //definição de mês e dia.
   if (diasMes <= jan) {
     dias = diasMes;
@@ -102,6 +109,7 @@ int main()
     dias = diasMes - nov;
     printf("%d de dezembro", dias);
   }
+
   //Printando resto da mensagem.
   printf(" de %d, %dh%dmin%ds\n", anos, horas, minutos, segundos);
   return 0;
